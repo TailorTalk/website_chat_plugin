@@ -124,7 +124,7 @@ p {
 .chat-window {
   /* font-family: "Ubuntu", sans-serif; */
   position: fixed;
-  height: 62%;
+  height:65%;
   width: 28%;
   bottom: 35px;
   right: 35px;
