@@ -9,11 +9,45 @@ function displayTypingIndicator() {
 // Get all nesscary details from script
 let session_id = null;
 const user = document.querySelector("#bot-script").getAttribute("user");
+const org = document.querySelector("#bot-script").getAttribute("org");
+const bot = document.querySelector("#bot-script").getAttribute("bot");
+const chatWindowPrimaryColor = document
+  .querySelector("#bot-script")
+  .getAttribute("cwpc");
+const defaultMessage = document
+  .querySelector("#bot-script")
+  .getAttribute("default_message");
+const botName = document.querySelector("#bot-script").getAttribute("botName");
+const heightAttribute = document
+  .querySelector("#bot-script")
+  .getAttribute("height");
+const widthAttribute = document
+  .querySelector("#bot-script")
+  .getAttribute("width");
+const whiteLabel =
+  document.querySelector("#bot-script").getAttribute("whiteLabel") === "false";
+const textColor = document
+  .querySelector("#bot-script")
+  .getAttribute("textColor");
+
+console.log(whiteLabel);
 
 // Constants
 const body = document.body;
 const chatIcon = createChatIcon();
 const chatWindow = createChatWindow();
+
+if (chatWindowPrimaryColor)
+  document.documentElement.style.setProperty(
+    "--chat-window-primary-color",
+    chatWindowPrimaryColor
+  );
+if (heightAttribute) {
+  chatWindow.style.height = heightAttribute;
+}
+if (widthAttribute) {
+  chatWindow.style.width = widthAttribute;
+}
 
 // Create chat icon element
 function createChatIcon() {
@@ -36,14 +70,14 @@ function createChatWindow() {
       
       </img>
       <div class="header-info">
-        <div>TalkBot</div>
-        <p>Powered by Tailor-Talk</p>
+        <div>${botName ? botName : "TalkBot"}</div>
+        ${whiteLabel ? "" : "<p>Powered by Tailor-Talk</p>"}
       </div>
       <button class="btn close-button material-symbols-outlined" >close</button>
     </div> 
     <div class="chat-history">
       <div class="intro-message">
-        Ask question about our product, service or booking some appointments.
+        ${defaultMessage ? defaultMessage : ""}
       </div>
     </div>
     <div class="message-container">
@@ -175,10 +209,13 @@ function appendToBotLastMessage(content) {
 function generateResponse(userMessage) {
   return new Promise((resolve, reject) => {
     const params = new URLSearchParams();
-    params.set("user", user);
+    params.set("org", org);
+    params.set("bot", bot);
+    params.set("user", "default");
     if (session_id) params.set("session", session_id);
     params.set("message", userMessage);
 
+    // https://tailortalk-preview.up.railway.app/maestro_chat/v1/chat/stream?org=xuper_mall&bot=b5c5a444-7b87-44eb-9394-d407027098f9&user=akashanand.iitd%40gmail.com&message=Hello
     const url = `https://tailortalk-production.up.railway.app/maestro_chat/v1/chat/stream?${params.toString()}`;
 
     const eventSource = new EventSource(url);
@@ -228,6 +265,11 @@ function generateResponse(userMessage) {
 // Initialize
 body.appendChild(chatIcon);
 body.appendChild(chatWindow);
+
+if (textColor) {
+  document.querySelector(".chat-header").style.color = textColor;
+  document.querySelector(".close-button").style.color = textColor;
+}
 
 // Event Listeners
 chatIcon.addEventListener("click", toggleChatWindow);

@@ -7,6 +7,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque&family=Roboto+Mono:wght@300;400;500;600;700&family=Signika+Negative&family=Source+Sans+3:wght@200;300;400&family=Ubuntu:wght@300;400&display=swap");
 
 /* DELETE HERE */
+:root {
+  --chat-window-primary-color: #4764fc; /* Default background color */
+}
+
 /* Chat Header Styles */
 * {
   padding: 0;
@@ -17,7 +21,9 @@
 .chat-header {
   /* box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.1); */
   height: 38px; /*40px here*/
-  background-color: #4764fc; /* Blue background color */
+  background-color: var(
+    --chat-window-primary-color
+  ); /* Blue background color */
   color: white; /* White text color */
   /* text-align: center; */
   padding: 13px;
@@ -79,12 +85,12 @@ p {
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #4764fc;
+    background-color: var(--chat-window-primary-color);
     border-radius: 6px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: #4765fcd6;
+    background-color: var(--chat-window-primary-color) / 2;
   }
 
   &::-webkit-scrollbar-track {
@@ -124,7 +130,7 @@ p {
 .chat-window {
   /* font-family: "Ubuntu", sans-serif; */
   position: fixed;
-  height:65%;
+  height: 65%;
   width: 28%;
   bottom: 35px;
   right: 35px;
@@ -206,7 +212,7 @@ p {
 .user-message {
   font-family: "Source Sans 3", sans-serif;
 
-  background-color: #4764fc;
+  background-color: var(--chat-window-primary-color);
   font-size: 14px;
   padding: 14px 16px;
   margin: 10px 2px;
