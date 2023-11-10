@@ -1,4 +1,5 @@
-const URL_LINK = "https://websitechatplugin-production.up.railway.app";
+const URL_LINK = "https://tailortalk.netlify.app//";
+
 const link = document.createElement("link");
 link.rel = "stylesheet";
 link.href = `${URL_LINK}/chat-plugin.css`;
