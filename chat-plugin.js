@@ -1,7 +1,13 @@
+const URL_LINK = "https://websitechatplugin-production.up.railway.app";
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = `/chat-plugin.css`;
+document.head.appendChild(link);
+
 // Display a "typing" indicator in the chat history
 function displayTypingIndicator() {
   const chatHistory = chatWindow.querySelector(".chat-history");
-  const typingMessage = createBotMessageElement("typing", true);
+  const typingMessage = createBotMessageElement("typing", "typing");
   chatHistory.insertAdjacentHTML("beforeend", typingMessage);
   chatHistory.scrollTo(0, chatHistory.scrollHeight);
 }
@@ -9,28 +15,26 @@ function displayTypingIndicator() {
 // Get all nesscary details from script
 let session_id = null;
 const user = document.querySelector("#bot-script").getAttribute("user");
-const org = document.querySelector("#bot-script").getAttribute("org");
-const bot = document.querySelector("#bot-script").getAttribute("bot");
+const org = document.querySelector("#bot-script").getAttribute("org_id");
+const bot = document.querySelector("#bot-script").getAttribute("bot_id");
 const chatWindowPrimaryColor = document
   .querySelector("#bot-script")
-  .getAttribute("cwpc");
+  .getAttribute("primary_color");
 const defaultMessage = document
   .querySelector("#bot-script")
   .getAttribute("default_message");
-const botName = document.querySelector("#bot-script").getAttribute("botName");
+const botName = document.querySelector("#bot-script").getAttribute("bot_name");
 const heightAttribute = document
   .querySelector("#bot-script")
-  .getAttribute("height");
+  .getAttribute("bot_height");
 const widthAttribute = document
   .querySelector("#bot-script")
-  .getAttribute("width");
+  .getAttribute("bot_width");
 const whiteLabel =
-  document.querySelector("#bot-script").getAttribute("whiteLabel") === "false";
+  document.querySelector("#bot-script").getAttribute("white_label") === "false";
 const textColor = document
   .querySelector("#bot-script")
-  .getAttribute("textColor");
-
-console.log(whiteLabel);
+  .getAttribute("text_color");
 
 // Constants
 const body = document.body;
@@ -53,7 +57,7 @@ if (widthAttribute) {
 function createChatIcon() {
   const chatIcon = document.createElement("div");
   chatIcon.className = "chat-icon";
-  chatIcon.innerHTML = `<img src="https://chat-plugin-demo.netlify.app/logo.png" /> `;
+  chatIcon.innerHTML = `<img src="${URL_LINK}/logo.png" alt="icon"/> `;
   return chatIcon;
 }
 
@@ -66,7 +70,7 @@ function createChatWindow() {
 
   chatWindow.innerHTML = `
     <div class="chat-header">
-      <img class="logo" src="https://chat-plugin-demo.netlify.app/pp.png">
+    <img class="chat-logo" src="${URL_LINK}/pp.png">
       
       </img>
       <div class="header-info">
@@ -76,9 +80,9 @@ function createChatWindow() {
       <button class="btn close-button material-symbols-outlined" >close</button>
     </div> 
     <div class="chat-history">
-      <div class="intro-message">
-        ${defaultMessage ? defaultMessage : ""}
-      </div>
+    ${
+      defaultMessage ? `<div class="intro-message">${defaultMessage}</div>` : ""
+    }
     </div>
     <div class="message-container">
       <input class="message-input" placeholder="Type your message...">
@@ -131,7 +135,28 @@ function sendMessage() {
   inputField.value = "";
   displayTypingIndicator();
 
-  generateResponse(userMessage);
+  generateResponse(userMessage)
+    .then((response) => {
+      // Handle the resolved promise here
+    })
+    .catch((error) => {
+      // Handle the rejected promise here
+      const chatHistory = chatWindow.querySelector(".chat-history");
+      const lastBotMessage = chatHistory.querySelector(
+        ".bot-message-container:last-child"
+      );
+
+      if (lastBotMessage) {
+        lastBotMessage.remove();
+      }
+
+      console.log(error);
+      const botMessageEle = createBotMessageElement(
+        "Something went wrong, Please try again later!",
+        "error"
+      );
+      chatHistory.insertAdjacentHTML("beforeend", botMessageEle); //MOVE UP
+    });
 }
 
 // Create a user message element
@@ -146,8 +171,16 @@ function createUserMessageElement(userMessage) {
 }
 
 // Create a bot message element
-function createBotMessageElement(botMessage, typing = false) {
-  if (typing === true) {
+function createBotMessageElement(botMessage, type = "false") {
+  if (type === "error") {
+    return `<div class="bot-message-container">
+    
+    <div class="error-message">
+      ${botMessage}
+    </div>
+  </div>`;
+  }
+  if (type === "typing") {
     return `
     <div class="bot-message-container" >
     
@@ -178,17 +211,12 @@ function appendToBotLastMessage(content) {
 
   if (lastBotMessageContainer) {
     const textWithLinks = lastBotMessageContainer.innerHTML + content;
-
-    // Create a regular expression to match links
     const linkRegex = /\[([^\]]+)]\((https?:\/\/[^\s\)]+)\)/g;
 
-    // Replace links with anchor tags
     const textWithAnchors = textWithLinks.replace(
       linkRegex,
       '$1 <a href="$2" target="__blank">$2</a>'
     );
-
-    // console.log(textWithAnchors);
 
     lastBotMessageContainer.innerHTML = textWithAnchors;
     chatHistory.scrollTo(0, chatHistory.scrollHeight);
@@ -240,7 +268,7 @@ function generateResponse(userMessage) {
         }
 
         const botMessageEle = createBotMessageElement("");
-        chatHistory.insertAdjacentHTML("beforeend", botMessageEle); //MOVE UP
+        chatHistory.insertAdjacentHTML("beforeend", botMessageEle);
       }
 
       if (data.content) {
