@@ -1,7 +1,7 @@
 const URL_LINK = "https://websitechatplugin-production.up.railway.app";
 const link = document.createElement("link");
 link.rel = "stylesheet";
-link.href = `/chat-plugin.css`;
+link.href = `${URL_LINK}/chat-plugin.css`;
 document.head.appendChild(link);
 
 // Display a "typing" indicator in the chat history
