@@ -85,6 +85,7 @@ function createChatWindow() {
       defaultMessage ? `<div class="intro-message">${defaultMessage}</div>` : ""
     }
     </div>
+    <div class="suggestion-strip"></div>
     <div class="message-container">
       <input class="message-input" placeholder="Type your message...">
       <span class="material-symbols-rounded send-button">send</span>
@@ -313,4 +314,64 @@ inputField.addEventListener("keyup", (event) => {
   if (event.key === "Enter") {
     sendMessage();
   }
+});
+
+const suggestionStrip = chatWindow.querySelector(".suggestion-strip");
+
+function updateSuggestions(suggestions) {
+  suggestionStrip.innerHTML = suggestions
+    .map((suggestion) => `<div class="suggestion_item">${suggestion}</div>`)
+    .join("");
+}
+
+suggestionStrip.addEventListener("click", (event) => {
+  const clickedSuggestion = event.target.textContent;
+  if (clickedSuggestion) {
+    chatWindow.querySelector(".message-input").value = clickedSuggestion;
+    sendMessage();
+  }
+});
+
+async function fetchSuggestions() {
+  const orgId = "ef9c504e-d483-49c2-90e1-eb70230dabd8"; // Assuming org is defined in your code
+  const botId = "tootly"; // Assuming bot is defined in your code
+  const userEmail = "default";
+
+  const url =
+    "https://tailortalk-production.up.railway.app/maestro_chat/asset/v1/suggestions";
+  const headers = {
+    "X-Org-Chat-Bot-Id": botId,
+    "X-Org-Id": orgId,
+    "X-User-Email": userEmail,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Failed to fetch suggestions. Status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    return data.result || [];
+  } catch (error) {
+    console.error("Error fetching suggestions:", error);
+    return [
+      "Hi",
+      "Hello",
+      "How are you",
+      "Tell me about org",
+      "Provide contact no.",
+      "Is it free?",
+    ];
+  }
+}
+
+fetchSuggestions().then((initialSuggestions) => {
+  updateSuggestions(initialSuggestions);
 });
