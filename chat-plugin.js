@@ -324,25 +324,26 @@ function updateSuggestions(suggestions) {
     .join("");
 }
 
+// const suggestionItems = chatWindow.querySelector(".suggestion_item");
+
 suggestionStrip.addEventListener("click", (event) => {
-  const clickedSuggestion = event.target.textContent;
-  if (clickedSuggestion) {
-    chatWindow.querySelector(".message-input").value = clickedSuggestion;
-    sendMessage();
+  if (event.target.classList.contains("suggestion_item")) {
+    const clickedSuggestion = event.target.textContent;
+    console.log(clickedSuggestion);
+    if (clickedSuggestion) {
+      chatWindow.querySelector(".message-input").value = clickedSuggestion;
+      sendMessage();
+    }
   }
 });
 
 async function fetchSuggestions() {
-  const orgId = "ef9c504e-d483-49c2-90e1-eb70230dabd8"; // Assuming org is defined in your code
-  const botId = "tootly"; // Assuming bot is defined in your code
-  const userEmail = "default";
-
   const url =
     "https://tailortalk-production.up.railway.app/maestro_chat/asset/v1/suggestions";
   const headers = {
-    "X-Org-Chat-Bot-Id": botId,
-    "X-Org-Id": orgId,
-    "X-User-Email": userEmail,
+    "X-Org-Chat-Bot-Id": bot,
+    "X-Org-Id": org,
+    "X-User-Email": "default",
   };
 
   try {
