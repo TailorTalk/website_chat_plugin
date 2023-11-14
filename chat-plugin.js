@@ -319,9 +319,11 @@ inputField.addEventListener("keyup", (event) => {
 const suggestionStrip = chatWindow.querySelector(".suggestion-strip");
 
 function updateSuggestions(suggestions) {
-  suggestionStrip.innerHTML = suggestions
-    .map((suggestion) => `<div class="suggestion_item">${suggestion}</div>`)
-    .join("");
+  if (suggestions.length > 0) {
+    suggestionStrip.innerHTML = suggestions
+      .map((suggestion) => `<div class="suggestion_item">${suggestion}</div>`)
+      .join("");
+  } else suggestionStrip.style.display = "none"; // Hide the suggestion strip
 }
 
 // const suggestionItems = chatWindow.querySelector(".suggestion_item");
