@@ -323,12 +323,12 @@
   padding-left: 10px;
   display: flex;
   gap: 6px;
-  overflow-x: auto; /* Use auto to show scrollbar only when needed */
+  overflow-x: auto;
 
   align-items: center;
   justify-items: center;
 
-  white-space: nowrap; /* Prevent line breaks for inline-flex children */
+  white-space: nowrap;
   height: 60px;
 
   scrollbar-width: auto;
@@ -353,7 +353,7 @@
 }
 
 .suggestion_item {
-  display: inline-flex; /* Use inline-flex for horizontal arrangement */
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 
@@ -368,7 +368,6 @@
   /* min-width: 30px; */
   border: 0.5px solid gray;
   cursor: pointer;
-  color: #474747;
   white-space: nowrap; /* Prevent line breaks inside suggestion items */
   margin-bottom: 5px; /* Add margin between suggestion items */
 }

@@ -319,16 +319,23 @@ inputField.addEventListener("keyup", (event) => {
 const suggestionStrip = chatWindow.querySelector(".suggestion-strip");
 
 function updateSuggestions(suggestions) {
-  suggestionStrip.innerHTML = suggestions
-    .map((suggestion) => `<div class="suggestion_item">${suggestion}</div>`)
-    .join("");
+  if (suggestions.length > 0) {
+    suggestionStrip.innerHTML = suggestions
+      .map((suggestion) => `<div class="suggestion_item">${suggestion}</div>`)
+      .join("");
+  } else suggestionStrip.style.display = "none"; // Hide the suggestion strip
 }
 
+// const suggestionItems = chatWindow.querySelector(".suggestion_item");
+
 suggestionStrip.addEventListener("click", (event) => {
-  const clickedSuggestion = event.target.textContent;
-  if (clickedSuggestion) {
-    chatWindow.querySelector(".message-input").value = clickedSuggestion;
-    sendMessage();
+  if (event.target.classList.contains("suggestion_item")) {
+    const clickedSuggestion = event.target.textContent;
+    console.log(clickedSuggestion);
+    if (clickedSuggestion) {
+      chatWindow.querySelector(".message-input").value = clickedSuggestion;
+      sendMessage();
+    }
   }
 });
 
@@ -341,6 +348,7 @@ async function fetchSuggestions() {
 
   const url =
     `https://tailortalk-production.up.railway.app/maestro_chat/asset/v1/suggestions?${params.toString()}`;
+
 
   try {
     const response = await fetch(url, {
