@@ -333,22 +333,18 @@ suggestionStrip.addEventListener("click", (event) => {
 });
 
 async function fetchSuggestions() {
-  const orgId = "ef9c504e-d483-49c2-90e1-eb70230dabd8"; // Assuming org is defined in your code
-  const botId = "tootly"; // Assuming bot is defined in your code
-  const userEmail = "default";
+
+  const params = new URLSearchParams();
+  params.set("org", org);
+  params.set("bot", bot);
+  params.set("user", "default");
 
   const url =
-    "https://tailortalk-production.up.railway.app/maestro_chat/asset/v1/suggestions";
-  const headers = {
-    "X-Org-Chat-Bot-Id": botId,
-    "X-Org-Id": orgId,
-    "X-User-Email": userEmail,
-  };
+    `https://tailortalk-production.up.railway.app/maestro_chat/asset/v1/suggestions?${params.toString()}`;
 
   try {
     const response = await fetch(url, {
-      method: "POST",
-      headers,
+      method: "GET",
     });
 
     if (!response.ok) {
@@ -362,12 +358,6 @@ async function fetchSuggestions() {
   } catch (error) {
     console.error("Error fetching suggestions:", error);
     return [
-      "Hi",
-      "Hello",
-      "How are you",
-      "Tell me about org",
-      "Provide contact no.",
-      "Is it free?",
     ];
   }
 }

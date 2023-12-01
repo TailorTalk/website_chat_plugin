@@ -366,8 +366,9 @@
   padding-left: 10px;
   padding-right: 10px;
   /* min-width: 30px; */
-  border: 1px solid gray;
+  border: 0.5px solid gray;
   cursor: pointer;
+  color: #474747;
   white-space: nowrap; /* Prevent line breaks inside suggestion items */
   margin-bottom: 5px; /* Add margin between suggestion items */
 }
