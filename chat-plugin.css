@@ -318,3 +318,56 @@
     right: 3.5px;
   }
 }
+
+.suggestion-strip {
+  padding-left: 10px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+
+  align-items: center;
+  justify-items: center;
+
+  white-space: nowrap;
+  height: 60px;
+
+  scrollbar-width: auto;
+
+  &::-webkit-scrollbar {
+    height: 1px;
+    width: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--chat-window-primary-color);
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--chat-window-primary-color) / 2;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f3f3f3;
+  }
+}
+
+.suggestion_item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+
+  background-color: white;
+  border-radius: 30px;
+  padding: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  /* min-width: 30px; */
+  border: 0.5px solid gray;
+  cursor: pointer;
+  white-space: nowrap; /* Prevent line breaks inside suggestion items */
+  margin-bottom: 5px; /* Add margin between suggestion items */
+}
