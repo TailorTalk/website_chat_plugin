@@ -163,14 +163,6 @@
   border-bottom-right-radius: 25px;
 }
 
-
-/*Link styles  */
-a{
-  color: var(--chat-window-primary-color) !important;
-  font-weight: 500;
-  
-}
-
 /* Message Input Styles */
 .message-input {
   font-size: 13px;
