@@ -177,10 +177,13 @@
 .message-input::placeholder {
   color: #a3a3a3;
 }
+
+
 /* Links color */
-a{
-  color: var(--chat-window-primary-color) !important;
+.bot-message a {
+  color: var(--chat-window-primary-color);
 }
+
 /* User Message Styles */
 .user-message-container {
   width: 100%;
