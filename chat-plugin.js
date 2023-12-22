@@ -366,6 +366,7 @@ async function fetchSuggestions() {
   } catch (error) {
     console.error("Error fetching suggestions:", error);
     return [
+
     ];
   }
 }

@@ -121,7 +121,7 @@
   width: 28%;
   bottom: 35px;
   right: 35px;
-  background-color: #f3f3f3;
+  background-color: #F9F9FB;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.1),
     0px 2px 2px rgb(17 17 17 / 21%);
 
@@ -158,7 +158,7 @@
   align-items: center;
   justify-content: center;
   border-top: 0.5px solid rgb(43, 43, 43);
-  background-color: rgb(250, 250, 250);
+  background-color: rgb(255, 255, 255);
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
 }
@@ -368,6 +368,7 @@
   /* min-width: 30px; */
   border: 0.5px solid gray;
   cursor: pointer;
+  color: #464646;
   white-space: nowrap; /* Prevent line breaks inside suggestion items */
   margin-bottom: 5px; /* Add margin between suggestion items */
 }
