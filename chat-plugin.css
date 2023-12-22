@@ -178,6 +178,12 @@
   color: #a3a3a3;
 }
 
+
+/* Links color */
+.bot-message a {
+  color: var(--chat-window-primary-color);
+}
+
 /* User Message Styles */
 .user-message-container {
   width: 100%;
